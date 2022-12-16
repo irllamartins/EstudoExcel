@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Home } from './Components/Home';
-import { ParseExcel } from './Components/ParseExcel';
+import { ParseExcel } from './Components/ParcelExcel/ParseExcel';
 
 function App() {
   return (
