@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 export const ParseExcel = () => {
     const [fileName, setFileName] = useState(null)
     const [columns, setColumns] = useState([])
+    
 
     const handleFile = async (e) => {
 
