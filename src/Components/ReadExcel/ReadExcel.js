@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Card, CardContent, TableRow, TableCell, Table } from '@material-ui/core';
 import { ExcelImportTool } from "./ExcelImportTool";
-import Links from "../Links";
-import { Label } from "@material-ui/icons";
+import styled from "styled-components"
+
 export function ReadExcel() {
 
     const [sheetData, setSheetData] = useState(null)
@@ -24,13 +24,19 @@ export function ReadExcel() {
     const handleSheetChange = (e) => {
         setSheet(e.target.value)
     }
+    const StyledBody = styled.div`
+     .Cards {background-color: #fbf2c4};
+     
+     
+     `;
+
     return (
-        <>
-            <Links />
+        < StyledBody>
+           
             <div>
                 <TableRow>
                     <TableCell md={12}>
-                        <Card>
+                        <Card className="Cards">
                             <h5>Read Excell sheets</h5>
                             <p>categorias</p>
 
@@ -42,7 +48,7 @@ export function ReadExcel() {
                 </TableRow>
                 {
                     sheetData && (
-                        <>
+                        <> <div className="Cards" >
                             <TableRow >
                                 <TableCell md={12}>
 
@@ -54,7 +60,9 @@ export function ReadExcel() {
                                             </div>)
                                     }
                                 </TableCell>
-                            </TableRow>
+                            </TableRow >
+                            </div>
+                            <div className="Cards" >
                             <TableRow>
                                 <h5 align="center">Nome da tabela selecionada: {sheet}</h5>
                                 <TableRow>
@@ -71,10 +79,11 @@ export function ReadExcel() {
                                         </Table>
                                     </TableCell>
                                 </TableRow>
-                            </TableRow>
+                            </TableRow> </div>
+                           
                         </>)
                 }
             </div>
-        </>
+        </ StyledBody>
     );
 }
