@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { TableRow, TableCell } from '@material-ui/core';
-import { Delete } from '@material-ui/icons'
+import { Delete} from '@material-ui/icons'
 import * as XLSX from 'xlsx'
 
-export const ExcelImportTool = () => {
+export const ExcelImportTool = (props) => {
     const [file, setFile] = useState(null)
     const [fileName, setFileName] = useState(null)
     const [sheetNames, setSheetNames] = useState([])
@@ -19,20 +19,27 @@ export const ExcelImportTool = () => {
     const readDataFromExcel = (data) => {
         const wb = XLSX.read(data)
         setSheetNames(wb.SheetNames)
-
+       
         var mySheetData={}
 
-        for (let i; i < wb.SheetNames.length; i++) {
+        for (var i=0; i < wb.SheetNames.length; i++) {
             let sheetName = wb.SheetNames[i]
-
+            //console.log(sheetName)
             const worksheet = wb.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet)
+            const jsonData = XLSX.utils.sheet_to_json(worksheet,
+                {
+                    blackrows: "",
+                    header: 1,
+                })
 
             mySheetData[sheetName] = jsonData;
-            console.log(sheetName)
+          
         }
         setSheetData(mySheetData)
-        console.log(wb)
+       // console.log(mySheetData)
+        //console.log(wb)
+
+        return mySheetData
     }
     const handleFile = async (e) => {
 
@@ -45,16 +52,20 @@ export const ExcelImportTool = () => {
 
         const data = await myFile.arrayBuffer();
 
-        readDataFromExcel(data)
+        const mySheetData = readDataFromExcel(data)
 
         setFile(myFile)
         setFileName(myFile.name);
-
+        props.onFileUploaded(mySheetData)
     }
 
     const handleRemove = () => {
         setFile(null)
         setFileName(null)
+        setFileName(null)
+        setSheetNames([])
+        setSheetData(null)
+        props.onFileUploaded(null)
         fileRef.current.value = "";
     }
     return (
@@ -73,7 +84,7 @@ export const ExcelImportTool = () => {
                         ref={fileRef}
                     />
                     {fileName && (
-                        <i> <Delete onClick={handleRemove} /></i>
+                        <Delete onClick={()=>handleRemove()} />
                     )}
                 </div>
             </TableCell>

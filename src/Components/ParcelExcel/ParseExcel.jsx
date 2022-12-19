@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as XLSX from 'xlsx';
+import Links from "../Links";
 export const ParseExcel = () => {
     const [fileName, setFileName] = useState(null)
     const [columns, setColumns] = useState([])
@@ -22,6 +23,7 @@ export const ParseExcel = () => {
     }
     return (
         <div>
+            <Links/>
             <h1>ParseExcel</h1>
             {fileName && (
                 <React.Fragment>
